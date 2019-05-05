@@ -1,0 +1,24 @@
+{
+  "name": "tfgfrontend",
+  "version": "0.0.1",
+  "description": "frontend del TFG, bootstrap vue",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UO245353/tfgfrontend.git"
+  },
+  "author": "Daniel Alvarez Vega UO245353",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UO245353/tfgfrontend/issues"
+  },
+  "homepage": "https://github.com/UO245353/tfgfrontend#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.19",
+    "vue": "^2.6.10"
+  }
+}
