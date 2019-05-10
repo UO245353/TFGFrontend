@@ -1,25 +1,21 @@
 <template>
   <div id="app">
-    <b-container fluid>
+    <b-row>
+      <b-col sm="12">
+        <b-navbar toggleable="lg" type="dark" variant="info">
+          <b-navbar-brand href="#">Gestion TI</b-navbar-brand>
+        </b-navbar>
+      </b-col>
+    </b-row>
+    <b-container>
       <b-row>
-        <b-col sm="12">
-          <b-navbar toggleable="lg" type="dark" variant="info">
-            <b-navbar-brand href="#">Gestion TI</b-navbar-brand>
-          </b-navbar>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col sm="1">
-        </b-col>
-        <b-col cols="10">
+        <b-col cols="12" id="app-core">
           <router-view/>
         </b-col>
-        <b-col sm="1">
-        </b-col>
-        <b-row>
-        </b-container>
-      </div>
-    </template>
+      <b-row>
+    </b-container>
+  </div>
+</template>
 
     <style>
     #app {
@@ -27,19 +23,9 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-align: center;
-      color: #2c3e50;
     }
+    #app-core {
 
-    #nav {
-      padding: 30px;
-    }
-
-    #nav a {
-      font-weight: bold;
-      color: #2c3e50;
-    }
-
-    #nav a.router-link-exact-active {
-      color: #42b983;
+      background-color: white
     }
     </style>
