@@ -29,6 +29,9 @@
 </template>
 
 <script>
+
+import axios from 'axios';
+
 export default {
   name: 'login',
   data() {
@@ -44,6 +47,19 @@ export default {
     onSubmit(evt) {
       evt.preventDefault()
       alert(JSON.stringify(this.form))
+      axios({
+        url: 'http://localhost:23456/api/login',
+        method: 'post',
+        data: this.form
+      })
+      .then(resp => {
+        alert('hola');
+        alert(resp);
+      })
+      .catch(err => {
+        alert('err');
+        alert(err);
+      });
     },
     onReset(evt) {
       evt.preventDefault()
