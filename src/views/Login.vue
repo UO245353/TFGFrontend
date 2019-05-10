@@ -1,5 +1,5 @@
 <template>
-  <div id="login">
+  <div id="login" class="login-padding center">
 
     <br>
     <b-row>
@@ -8,7 +8,7 @@
       <b-col cols="8">
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
-          <b-form-input id="uo-input" v-model="form.uo" placeholder="Ingresa tu UO" required/>
+          <b-form-input id="uo-input" v-model="form.name" placeholder="Ingresa tu UO" required/>
           <b-form-input id="pass-input" type="password" v-model="form.pass" placeholder="Ingresa tu Contraseña" required/>
 
           <br>
@@ -37,40 +37,51 @@ export default {
   data() {
     return {
       form: {
-        uo: '',
+        name: '',
         pass: ''
       },
+      token: '',
       show: true
     }
   },
   methods: {
     onSubmit(evt) {
       evt.preventDefault()
-      alert(JSON.stringify(this.form))
-      axios({
-        url: 'http://localhost:23456/api/login',
+
+      return axios({
+        url: 'http://localhost:23456/api/login/admin',
         method: 'post',
         data: this.form
       })
       .then(resp => {
-        alert('hola');
-        alert(resp);
+
+        this.token = resp.data.obj.token;
+
+        this.$router.push('/admin-list');
+
+        return true;
       })
       .catch(err => {
-        alert('err');
-        alert(err);
+        console.log(err);
+
+        return false;
       });
     },
     onReset(evt) {
       evt.preventDefault()
-      // Reset our form values
-      this.form.uo = ''
+
+      this.form.name = ''
       this.form.pass = ''
-      // Trick to reset/clear native browser form validation state
+
       this.show = false
       this.$nextTick(() => {
         this.show = true
       })
+    }
+  },
+  watch: {
+    token(newToken) {
+      localStorage.token = newToken;
     }
   }
 }

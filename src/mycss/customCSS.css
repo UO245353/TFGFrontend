@@ -1,0 +1,15 @@
+.app-padding {
+  padding-left: .1rem;
+  padding-right: .1rem;
+  padding-bottom: .1rem;
+}
+
+.navbar-padding {
+  padding-left: 3px;
+  padding-right: 0px;
+}
+
+.login-padding {
+  padding-top: 10rem;
+  padding-bottom: 10rem;
+}

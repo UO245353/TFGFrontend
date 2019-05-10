@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="app-padding">
     <b-row>
-      <b-col sm="12">
+      <b-col cols="12" class="navbar-padding">
         <b-navbar toggleable="lg" type="dark" variant="info">
           <b-navbar-brand href="#">Gestion TI</b-navbar-brand>
         </b-navbar>
@@ -9,7 +9,7 @@
     </b-row>
     <b-container>
       <b-row>
-        <b-col cols="12" id="app-core">
+        <b-col cols="12" id="app-core" class="app-padding center">
           <router-view/>
         </b-col>
       <b-row>
