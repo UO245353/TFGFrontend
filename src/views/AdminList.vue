@@ -10,11 +10,17 @@
     <b-row>
       <b-col cols="12">
         <div>
-            <b-table
-            outlined
-            hover
-            responsive
-            :items="adminList"/>
+          <b-table
+          outlined
+          hover
+          responsive
+          :busy="isListNotLoaded"
+          :items="adminList">
+          <div slot="table-busy" class="text-center text-danger my-2">
+            <b-spinner class="align-middle"></b-spinner>
+            <strong>Loading...</strong>
+          </div>
+        </b-table>
       </div>
     </b-col>
   </b-row>
@@ -24,46 +30,17 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: 'admin-list',
   data() {
     return {
-      adminList: [
-        {
-          _id: '0123456789012345678901',
-          name: 'dani',
-          email: '1@1.1'
-        },
-        {
-          _id: '0123456789012345678901',
-          name: 'dani',
-          email: '1@1.1'
-        },
-        {
-          _id: '0123456789012345678901',
-          name: 'dani',
-          email: '1@1.1'
-        },
-      ],
+      adminList: [],
       slide: 0,
       sliding: null,
+      isListNotLoaded: true,
       items: [
-        {
-          text: 'Administradores',
-          href: '#',
-          active: true
-        },
-        {
-          text: 'Administradores',
-          href: '#',
-          active: true
-        },
-        {
-          text: 'Administradores',
-          href: '#',
-          active: true
-        },
         {
           text: 'Administradores',
           href: '#',
@@ -76,13 +53,27 @@ export default {
       ]
     }
   },
-  methods: {
-    onSlideStart() {
-      this.sliding = true
-    },
-    onSlideEnd() {
-      this.sliding = false
-    }
+  created() {
+
+    return axios({
+      url: 'http://localhost:23456/api/admin',
+      method: 'get',
+      headers: {
+        auth: localStorage.token
+      }
+    })
+    .then(resp => {
+
+      this.adminList = resp.data.obj;
+
+      this.isListNotLoaded = false;
+
+      return true;
+    })
+    .catch(err => {
+
+      throw err;
+    });
   }
 };
 </script>
