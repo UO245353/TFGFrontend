@@ -4,6 +4,10 @@
   padding-bottom: .1rem;
 }
 
+.logged-height {
+  min-height: 85vh;
+}
+
 .navbar-padding {
   padding-left: 3px;
   padding-right: 0px;

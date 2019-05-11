@@ -40,7 +40,6 @@ export default {
         name: '',
         pass: ''
       },
-      token: '',
       show: true
     }
   },
@@ -55,16 +54,15 @@ export default {
       })
       .then(resp => {
 
-        this.token = resp.data.obj.token;
+        localStorage.token = resp.data.obj.token;
 
         this.$router.push('/admin-list');
 
         return true;
       })
       .catch(err => {
-        console.log(err);
 
-        return false;
+        throw err;
       });
     },
     onReset(evt) {
@@ -74,14 +72,10 @@ export default {
       this.form.pass = ''
 
       this.show = false
+
       this.$nextTick(() => {
         this.show = true
       })
-    }
-  },
-  watch: {
-    token(newToken) {
-      localStorage.token = newToken;
     }
   }
 }

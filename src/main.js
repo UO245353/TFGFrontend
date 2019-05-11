@@ -11,6 +11,14 @@ import './mycss/customCSS.css';
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 
+Vue.mixin({
+  data: function() {
+    return {
+      hasToken: false
+    };
+  }
+});
+
 new Vue({
   router,
   store,

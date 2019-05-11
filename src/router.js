@@ -40,7 +40,7 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
 
-  if(!!localStorage.token){
+  if(!!localStorage.token || to.name === 'login'){
     next();
   }
 });
