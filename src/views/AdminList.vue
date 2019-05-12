@@ -4,9 +4,10 @@
     <br>
     <b-row>
       <b-col cols="12">
-        <b-breadcrumb :items="items"></b-breadcrumb>
+        <Nav admin=true/>
       </b-col>
     </b-row>
+    <br>
     <b-row>
       <b-col cols="10">
         <p class="text-left" style="padding-left: 1rem;" v-on:click="addUser()">Listado de Administradores</p>
@@ -45,14 +46,13 @@
 
 <script>
 import axios from 'axios';
+import Nav from '@/components/Nav.vue';
 
 export default {
   name: 'admin-list',
   data() {
     return {
       adminList: [],
-      slide: 0,
-      sliding: null,
       isListNotLoaded: true,
       fields: [
         { key: '_id', label: 'Id' },
@@ -61,17 +61,6 @@ export default {
         'Editar',
         'Borrar'
       ],
-      items: [
-        {
-          text: 'Administradores',
-          href: '#',
-          active: true
-        },
-        {
-          text: 'Temas',
-          href: '#'
-        }
-      ]
     }
   },
   methods: {
@@ -106,6 +95,9 @@ export default {
 
       throw err;
     });
+  },
+  components: {
+    Nav
   }
 };
 </script>

@@ -9,15 +9,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import './mycss/customCSS.css';
 
 Vue.use(BootstrapVue);
-Vue.config.productionTip = false;
 
-Vue.mixin({
-  data: function() {
-    return {
-      hasToken: false
-    };
-  }
-});
+Vue.config.productionTip = false;
 
 new Vue({
   router,
