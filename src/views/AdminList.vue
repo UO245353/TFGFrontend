@@ -1,7 +1,8 @@
 <template>
   <div id="admin-list" class="logged-height">
 
-    <AddAdmin :show="showAddAdmin" v-on:success="addAdminSuccess" v-on:close="closeModels"/>
+    <AddAdmin :show="showAddAdmin" v-on:success="addUserSuccess" v-on:close="closeModels"/>
+    <RemoveAdmin :adminData="deleteAdminData" :show="showRemoveAdmin" v-on:success="removeUserSuccess" v-on:close="closeModels"/>
     <br>
     <b-row>
       <b-col cols="12">
@@ -49,6 +50,7 @@
 import axios from 'axios';
 import Nav from '@/components/Nav.vue';
 import AddAdmin from '@/components/Admin/AddAdmin.vue';
+import RemoveAdmin from '@/components/Admin/DeleteAdmin.vue';
 
 export default {
   name: 'admin-list',
@@ -58,6 +60,7 @@ export default {
       isListNotLoaded: true,
       isListUpdated: true,
       showAddAdmin: false,
+      showRemoveAdmin: false,
       fields: [
         { key: '_id', label: 'Id' },
         { key: 'name', label: 'Nombre' },
@@ -65,6 +68,7 @@ export default {
         'Editar',
         'Borrar'
       ],
+      deleteAdminData: {}
     }
   },
   watch: {
@@ -100,32 +104,27 @@ export default {
       this.showAddAdmin = true;
     },
     removeUser(id) {
+      this.deleteAdminData = this.adminList.find(admin => admin._id === id);
 
-      return axios({
-        url: 'http://localhost:23456/api/admin/' + id,
-        method: 'delete',
-        headers: {
-          auth: localStorage.token
-        }
-      })
-      .then(() => {
-
-        this.isListUpdated = false;
-        this.isListNotLoaded = false;
-
-        return true;
-      })
-      .catch(err => {
-
-        throw err;
-      });
+      this.showRemoveAdmin = true;
     },
-    addAdminSuccess(){
+    removeUserSuccess(){
+      this.deleteAdminData = false;
+
       this.isListUpdated = false;
+
+      this.showRemoveAdmin = false;
+    },
+    addUserSuccess(){
+      this.isListUpdated = false;
+
       this.showAddAdmin = false;
     },
     closeModels() {
+      this.deleteAdminData = false;
+
       this.showAddAdmin = false;
+      this.showRemoveAdmin = false;
     }
   },
   created() {
@@ -152,7 +151,8 @@ export default {
   },
   components: {
     Nav,
-    AddAdmin
+    AddAdmin,
+    RemoveAdmin
   }
 };
 </script>
