@@ -1,6 +1,7 @@
 <template>
   <div id="admin-list" class="logged-height">
 
+    <AddAdmin :show="showAddAdmin" v-on:success="addAdminSuccess" v-on:close="closeModels"/>
     <br>
     <b-row>
       <b-col cols="12">
@@ -10,10 +11,10 @@
     <br>
     <b-row>
       <b-col cols="10">
-        <p class="text-left" style="padding-left: 1rem;" v-on:click="addUser()">Listado de Administradores</p>
+        <p class="text-left" style="padding-left: 1rem;">Listado de Administradores</p>
       </b-col>
       <b-col cols="2">
-        <p class="fas fa-user-plus show-hand-pointer"></p>
+        <p class="fas fa-user-plus show-hand-pointer" v-on:click="addUser()"></p>
       </b-col>
     </b-row>
     <b-row>
@@ -28,7 +29,7 @@
           :fields="fields">
           <div slot="table-busy" class="text-center text-info my-2">
             <b-spinner class="align-middle"></b-spinner>
-            <strong>Loading...</strong>
+            <strong>Cargando...</strong>
           </div>
           <template slot="Editar" slot-scope="data">
             <i class="fas fa-user-edit show-hand-pointer" v-on:click="editUser(data.item._id)"></i>
@@ -47,6 +48,7 @@
 <script>
 import axios from 'axios';
 import Nav from '@/components/Nav.vue';
+import AddAdmin from '@/components/Admin/AddAdmin.vue';
 
 export default {
   name: 'admin-list',
@@ -54,6 +56,8 @@ export default {
     return {
       adminList: [],
       isListNotLoaded: true,
+      isListUpdated: true,
+      showAddAdmin: false,
       fields: [
         { key: '_id', label: 'Id' },
         { key: 'name', label: 'Nombre' },
@@ -63,15 +67,65 @@ export default {
       ],
     }
   },
+  watch: {
+    isListUpdated(){
+      if(!this.isListUpdated){
+
+        return axios({
+          url: 'http://localhost:23456/api/admin',
+          method: 'get',
+          headers: {
+            auth: localStorage.token
+          }
+        })
+        .then(resp => {
+
+          this.adminList = resp.data.obj
+
+          this.isListNotLoaded = false;
+          this.isListUpdated = true;
+
+          return true;
+        })
+        .catch(err => {
+
+          throw err;
+        });
+      }
+    }
+  },
   methods: {
-    editUser(id) {
-      console.log(id);
-    },
+    editUser(id) {},
     addUser(id) {
-      console.log();
+      this.showAddAdmin = true;
     },
     removeUser(id) {
-      console.log(id);
+
+      return axios({
+        url: 'http://localhost:23456/api/admin/' + id,
+        method: 'delete',
+        headers: {
+          auth: localStorage.token
+        }
+      })
+      .then(() => {
+
+        this.isListUpdated = false;
+        this.isListNotLoaded = false;
+
+        return true;
+      })
+      .catch(err => {
+
+        throw err;
+      });
+    },
+    addAdminSuccess(){
+      this.isListUpdated = false;
+      this.showAddAdmin = false;
+    },
+    closeModels() {
+      this.showAddAdmin = false;
     }
   },
   created() {
@@ -97,7 +151,8 @@ export default {
     });
   },
   components: {
-    Nav
+    Nav,
+    AddAdmin
   }
 };
 </script>
