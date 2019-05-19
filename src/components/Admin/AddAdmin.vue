@@ -1,6 +1,6 @@
 <template>
   <b-modal
-  @hide = "cancel"
+  v-on:hide="cancel()"
   v-model="show"
   size="xl"
   centered
@@ -106,17 +106,18 @@
     </b-container>
   </b-form>
   <div slot="modal-footer" class="w-100">
+
     <b-button
-    variant="primary"
+    variant="secondary"
     size="sm"
     class="float-left"
-    @click="cancel()">Cancelar</b-button>
+    v-on:click="cancel()">Cancelar</b-button>
 
     <b-button
     variant="primary"
     size="sm"
     class="float-right"
-    @click="onSubmit()">Crear</b-button>
+    v-on:click="onSubmit()">Crear</b-button>
   </div>
 </b-modal>
 </template>

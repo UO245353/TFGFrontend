@@ -100,31 +100,39 @@ export default {
   },
   methods: {
     editUser(id) {},
-    addUser(id) {
+    addUser() {
       this.showAddAdmin = true;
+
+      return true;
     },
     removeUser(id) {
       this.deleteAdminData = this.adminList.find(admin => admin._id === id);
 
       this.showRemoveAdmin = true;
+
+      return true;
     },
     removeUserSuccess(){
-      this.deleteAdminData = false;
 
       this.isListUpdated = false;
 
-      this.showRemoveAdmin = false;
+      this.methods.closeModels();
+      return true;
     },
     addUserSuccess(){
       this.isListUpdated = false;
 
-      this.showAddAdmin = false;
+      this.methods.closeModels();
+      return true;
     },
     closeModels() {
-      this.deleteAdminData = false;
+      
+      this.deleteAdminData = {};
 
       this.showAddAdmin = false;
       this.showRemoveAdmin = false;
+
+      return true;
     }
   },
   created() {

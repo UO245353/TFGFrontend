@@ -6,6 +6,9 @@
       <b-col cols="2">
       </b-col>
       <b-col cols="8">
+        <b-alert v-model="showAlert" variant="danger" dismissible>
+          Usuario o clave incorrectos
+        </b-alert>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
           <b-form-input id="uo-input" v-model="form.name" placeholder="Ingresa tu UO" required/>
@@ -40,12 +43,13 @@ export default {
         name: '',
         pass: ''
       },
-      show: true
+      show: true,
+      showAlert: false
     }
   },
   methods: {
     onSubmit(evt) {
-      evt.preventDefault()
+      evt.preventDefault();
 
       return axios({
         url: 'http://localhost:23456/api/login/admin',
@@ -64,7 +68,9 @@ export default {
       })
       .catch(err => {
 
-        throw err;
+        this.showAlert = true;
+
+        return false;
       });
     },
     onReset(evt) {
