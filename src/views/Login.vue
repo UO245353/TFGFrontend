@@ -56,6 +56,8 @@ export default {
 
         localStorage.token = resp.data.obj.token;
 
+        this.$store.commit('logIn');
+
         this.$router.push('/admin-list');
 
         return true;

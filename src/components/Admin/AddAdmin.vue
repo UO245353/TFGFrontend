@@ -194,7 +194,7 @@ export default {
       }
     },
     cancel() {
-      confPass = undefined;
+      this.confPass = undefined;
       this.$emit('close');
     }
   }

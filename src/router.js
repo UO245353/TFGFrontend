@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Login from './views/Login.vue';
 import AdminList from './views/AdminList.vue';
 import ThemeList from './views/ThemeList.vue';
+import store from './store.js';
 
 Vue.use(Router);
 
@@ -29,11 +30,10 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
 
   if(to.name === 'login'){
-
-    delete localStorage.token;
+    store.commit('logOut');
   }
 
-  if(!!localStorage.token || to.name === 'login'){
+  if(!!store.getters.getIsLogged || to.name === 'login'){
     next();
   }
 });
