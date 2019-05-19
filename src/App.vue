@@ -5,9 +5,9 @@
         <b-navbar toggleable="lg" type="dark" variant="info">
           <b-navbar-brand href="#">Gestion TI</b-navbar-brand>
 
-          <b-navbar-toggle target="nav-collapse" :hidden="hideNavBarMenu"></b-navbar-toggle>
+          <b-navbar-toggle ref="ddSalir" target="nav-collapse" :hidden="hideNavBarMenu"></b-navbar-toggle>
 
-          <b-collapse id="nav-collapse" is-nav :hidden="hideNavBarMenu">
+          <b-collapse id="nav-collapse" ref="nav-collapse" is-nav :hidden="hideNavBarMenu">
 
             <b-navbar-nav class="ml-auto">
                 <b-dropdown-item v-on:click="logout" right>Salir</b-dropdown-item>
@@ -49,6 +49,8 @@
           this.$store.commit('logOut');
 
           this.$router.push('/');
+
+          this.$refs['nav-collapse'].toggle();
 
           return true;
         }
