@@ -195,6 +195,7 @@ export default {
       }
     },
     cancel() {
+      this.form = {};
       this.confPass = undefined;
       this.$emit('close');
     }
