@@ -1,6 +1,7 @@
 <template>
-  <div id="admin-list" class="logged-height">
+  <div id="theme-list" class="logged-height">
 
+    <AddTheme :show="showAddTheme" v-on:success="addThemeSuccess" v-on:close="closeModels"/>
     <br>
     <b-row>
       <b-col cols="12">
@@ -10,10 +11,10 @@
     <br>
     <b-row>
       <b-col cols="10">
-        <p class="text-left" style="padding-left: 1rem;" v-on:click="addTema()">Listado de Temas</p>
+        <p class="text-left" style="padding-left: 1rem;">Listado de Temas</p>
       </b-col>
       <b-col cols="2">
-        <p class="fas fa-user-plus show-hand-pointer"></p>
+        <p class="fas fa-user-plus show-hand-pointer" v-on:click="addTheme()"></p>
       </b-col>
     </b-row>
     <b-row>
@@ -24,17 +25,17 @@
           hover
           responsive
           :busy="isListNotLoaded"
-          :items="temaList"
+          :items="themeList"
           :fields="fields">
           <div slot="table-busy" class="text-center text-info my-2">
             <b-spinner class="align-middle"></b-spinner>
             <strong>Loading...</strong>
           </div>
           <template slot="Editar" slot-scope="data">
-            <i class="fas fa-user-edit show-hand-pointer" v-on:click="editTema(data.item._id)"></i>
+            <i class="fas fa-user-edit show-hand-pointer" v-on:click="editTheme(data.item._id)"></i>
           </template>
           <template slot="Borrar" slot-scope="data">
-            <i class="fas fa-user-times show-hand-pointer" v-on:click="removeTema(data.item._id)"></i>
+            <i class="fas fa-user-times show-hand-pointer" v-on:click="removeTheme(data.item._id)"></i>
           </template>
         </b-table>
       </div>
@@ -47,13 +48,16 @@
 <script>
 import axios from 'axios';
 import Nav from '@/components/Nav.vue';
+import AddTheme from '@/components/ThemeList/AddTheme.vue';
 
 export default {
   name: 'theme-list',
   data() {
     return {
-      temaList: [],
+      themeList: [],
       isListNotLoaded: true,
+      isListUpdated: true,
+      showAddTheme: false,
       fields: [
         { key: '_id', label: 'Id' },
         { key: 'number', label: 'Numero' },
@@ -66,14 +70,29 @@ export default {
     }
   },
   methods: {
-    editTema(id) {
+    editTheme(id) {
       console.log(id);
     },
-    addTema() {
-      console.log();
+    addTheme() {
+      console.log('holaaa');
+      this.showAddTheme = true;
+
+      return true;
     },
-    removeTema(id) {
+    removeTheme(id) {
       console.log(id);
+    },
+    addThemeSuccess(){
+      this.isListUpdated = false;
+
+      this.closeModels();
+      return true;
+    },
+    closeModels() {
+
+      this.showAddTheme = false;
+
+      return true;
     }
   },
   created() {
@@ -87,7 +106,7 @@ export default {
     })
     .then(resp => {
 
-      this.temaList = resp.data.obj;
+      this.themeList = resp.data.obj;
 
       this.isListNotLoaded = false;
 
@@ -98,8 +117,36 @@ export default {
       throw err;
     });
   },
+  watch: {
+    isListUpdated(){
+      if(!this.isListUpdated){
+
+        return axios({
+          url: 'http://localhost:23456/api/theme',
+          method: 'get',
+          headers: {
+            auth: localStorage.token
+          }
+        })
+        .then(resp => {
+
+          this.themeList = resp.data.obj
+
+          this.isListNotLoaded = false;
+          this.isListUpdated = true;
+
+          return true;
+        })
+        .catch(err => {
+
+          throw err;
+        });
+      }
+    }
+  },
   components: {
-    Nav
+    Nav,
+    AddTheme
   }
 };
 </script>

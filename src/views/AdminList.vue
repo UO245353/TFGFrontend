@@ -50,9 +50,9 @@
 <script>
 import axios from 'axios';
 import Nav from '@/components/Nav.vue';
-import AddAdmin from '@/components/Admin/AddAdmin.vue';
-import RemoveAdmin from '@/components/Admin/DeleteAdmin.vue';
-import EditAdmin from '@/components/Admin/EditAdmin.vue';
+import AddAdmin from '@/components/AdminList/AddAdmin.vue';
+import RemoveAdmin from '@/components/AdminList/DeleteAdmin.vue';
+import EditAdmin from '@/components/AdminList/EditAdmin.vue';
 
 export default {
   name: 'admin-list',
