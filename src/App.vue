@@ -3,7 +3,7 @@
     <b-row>
       <b-col cols="12" class="navbar-padding">
         <b-navbar toggleable="lg" type="dark" variant="info">
-          <b-navbar-brand href="#">Gestion TI</b-navbar-brand>
+          <b-navbar-brand to="admin-list">Gestion TI</b-navbar-brand>
 
           <b-navbar-toggle ref="ddSalir" target="nav-collapse" :hidden="hideNavBarMenu"></b-navbar-toggle>
 

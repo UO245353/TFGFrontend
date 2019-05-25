@@ -117,7 +117,7 @@
     variant="primary"
     size="sm"
     class="float-right"
-    v-on:click="onSubmit()">Crear</b-button>
+    v-on:click="onSubmit()">Editar</b-button>
   </div>
 </b-modal>
 </template>
@@ -157,7 +157,7 @@ export default {
         return null;
       }
 
-      return /^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s])[A-Za-z\d]|[^a-zA-Z\d\s]{6,15}/.test(this.form.pass);
+      return /^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s])[A-Za-z\d]|[^a-zA-Z\d\s]{6,15}/.test(this.editAdminData.pass);
     },
     confirmState() {
 
