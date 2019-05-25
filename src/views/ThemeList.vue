@@ -15,7 +15,7 @@
         <p class="text-left" style="padding-left: 1rem;">Listado de Temas</p>
       </b-col>
       <b-col cols="2">
-        <p class="fas fa-user-plus show-hand-pointer" v-on:click="addTheme()"></p>
+        <p class="fas fa-user-plus show-hand-pointer" v-on:click="addTheme()" title="Nuevo Tema"></p>
       </b-col>
     </b-row>
     <b-row>
@@ -33,10 +33,13 @@
             <strong>Loading...</strong>
           </div>
           <template slot="Editar" slot-scope="data">
-            <i class="fas fa-user-edit show-hand-pointer" v-on:click="editTheme(data.item._id)"></i>
+            <i class="fas fa-user-edit show-hand-pointer" v-on:click="editTheme(data.item._id)" title="Editar Tema"></i>
           </template>
           <template slot="Borrar" slot-scope="data">
-            <i class="fas fa-user-times show-hand-pointer" v-on:click="removeTheme(data.item._id)"></i>
+            <i class="fas fa-user-times show-hand-pointer" v-on:click="removeTheme(data.item._id)" title="Borrar Tema"></i>
+          </template>
+          <template slot="Ver Detalle" slot-scope="data">
+            <i class="fas fa-arrow-alt-circle-right" to='theme-list' title="Ver Detalle"></i>
           </template>
         </b-table>
       </div>
@@ -68,7 +71,8 @@ export default {
         { key: 'questions.length', label: 'Preguntas' },
         { key: 'sections.length', label: 'Apartados' },
         'Editar',
-        'Borrar'
+        'Borrar',
+        'Ver Detalle'
       ],
       deleteThemeData: {},
     }

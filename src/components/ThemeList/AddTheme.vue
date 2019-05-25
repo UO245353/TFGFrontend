@@ -104,7 +104,7 @@ export default {
         return null;
       }
 
-      return /^.{1,}$/.test(this.form.title);
+      return /^(?=\w.*).{1,}$/.test(this.form.title);
     },
   },
   data() {

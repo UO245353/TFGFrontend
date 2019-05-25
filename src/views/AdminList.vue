@@ -16,7 +16,7 @@
         <p class="text-left" style="padding-left: 1rem;">Listado de Administradores</p>
       </b-col>
       <b-col cols="2">
-        <p class="fas fa-user-plus show-hand-pointer" v-on:click="addUser()"></p>
+        <p class="fas fa-user-plus show-hand-pointer" v-on:click="addUser()" title="Nuevo Administrador"></p>
       </b-col>
     </b-row>
     <b-row>
@@ -34,10 +34,10 @@
             <strong>Cargando...</strong>
           </div>
           <template slot="Editar" slot-scope="data">
-            <i class="fas fa-user-edit show-hand-pointer" v-on:click="editUser(data.item._id)"></i>
+            <i class="fas fa-user-edit show-hand-pointer" v-on:click="editUser(data.item._id)" title="Editar Administrador"></i>
           </template>
           <template slot="Borrar" slot-scope="data">
-            <i class="fas fa-user-times show-hand-pointer" v-on:click="removeUser(data.item._id)"></i>
+            <i class="fas fa-user-times show-hand-pointer" v-on:click="removeUser(data.item._id)" title="Borrar Administrador"></i>
           </template>
         </b-table>
       </div>
