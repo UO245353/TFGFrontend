@@ -2,6 +2,7 @@
   <div id="theme-list" class="logged-height">
 
     <AddTheme :show="showAddTheme" v-on:success="addThemeSuccess" v-on:close="closeModels"/>
+    <RemoveTheme :themeData="deleteThemeData" :show="showRemoveTheme" v-on:success="removeThemeSuccess" v-on:close="closeModels"/>
     <br>
     <b-row>
       <b-col cols="12">
@@ -49,6 +50,7 @@
 import axios from 'axios';
 import Nav from '@/components/Nav.vue';
 import AddTheme from '@/components/ThemeList/AddTheme.vue';
+import RemoveTheme from '@/components/ThemeList/DeleteTheme.vue';
 
 export default {
   name: 'theme-list',
@@ -58,6 +60,7 @@ export default {
       isListNotLoaded: true,
       isListUpdated: true,
       showAddTheme: false,
+      showRemoveTheme: false,
       fields: [
         { key: '_id', label: 'Id' },
         { key: 'number', label: 'Numero' },
@@ -66,7 +69,8 @@ export default {
         { key: 'sections.length', label: 'Apartados' },
         'Editar',
         'Borrar'
-      ]
+      ],
+      deleteThemeData: {},
     }
   },
   methods: {
@@ -74,15 +78,25 @@ export default {
       console.log(id);
     },
     addTheme() {
-      console.log('holaaa');
       this.showAddTheme = true;
 
       return true;
     },
     removeTheme(id) {
-      console.log(id);
+      this.deleteThemeData = this.themeList.find(theme => theme._id === id);
+
+      this.showRemoveTheme = true;
+
+      return true;
     },
     addThemeSuccess(){
+      this.isListUpdated = false;
+
+      this.closeModels();
+      return true;
+    },
+    removeThemeSuccess(){
+
       this.isListUpdated = false;
 
       this.closeModels();
@@ -91,6 +105,7 @@ export default {
     closeModels() {
 
       this.showAddTheme = false;
+      this.showRemoveTheme = false;
 
       return true;
     }
@@ -146,7 +161,8 @@ export default {
   },
   components: {
     Nav,
-    AddTheme
+    AddTheme,
+    RemoveTheme
   }
 };
 </script>
