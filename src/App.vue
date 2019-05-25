@@ -10,7 +10,7 @@
           <b-collapse id="nav-collapse" ref="nav-collapse" is-nav :hidden="hideNavBarMenu">
 
             <b-navbar-nav class="ml-auto" :hidden="hideNavBarMenu">
-                <b-dropdown-item v-on:click="logout" right>Salir</b-dropdown-item>
+              <b-dropdown-item v-on:click="logout" right>Salir</b-dropdown-item>
             </b-navbar-nav>
           </b-collapse>
 
