@@ -4,8 +4,6 @@ import CONFIG from './config.js';
 
 Vue.use(Vuex);
 
-console.log('hola 1', CONFIG);
-
 export default new Vuex.Store({
   state: {
     isLogged: !!localStorage.token,
