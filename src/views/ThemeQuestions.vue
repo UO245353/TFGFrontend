@@ -8,8 +8,8 @@
     <br>
     <b-row>
     </b-row>
-  <br>
-</div>
+    <br>
+  </div>
 </template>
 
 <script>
@@ -20,14 +20,63 @@ export default {
   name: 'theme-questions',
   data() {
     return {
-      themeId: this.$route.params.themeId
+      themeId: this.$route.params.themeId,
+      theme: {},
+      isListNotLoaded: true,
+      isListUpdated: true,
     }
   },
   methods: {},
   created() {
-    return;
+
+    return axios({
+      url: this.$store.getters.getBackendURLBase + '/api/theme/' + this.themeId,
+      method: 'get',
+      headers: {
+        auth: localStorage.token
+      }
+    })
+    .then(resp => {
+      console.log(resp);
+      this.theme = resp.data.obj
+
+      this.isListNotLoaded = false;
+      this.isListUpdated = true;
+
+      return true;
+    })
+    .catch(err => {
+
+      throw err;
+    });
   },
-  watch: {},
+  watch: {
+    isListUpdated(){
+      if(!this.isListUpdated){
+
+        return axios({
+          url: this.$store.getters.getBackendURLBase + '/api/theme/' + this.themeId,
+          method: 'get',
+          headers: {
+            auth: localStorage.token
+          }
+        })
+        .then(resp => {
+
+          this.theme = resp.data.obj
+
+          this.isListNotLoaded = false;
+          this.isListUpdated = true;
+
+          return true;
+        })
+        .catch(err => {
+
+          throw err;
+        });
+      }
+    }
+  },
   components: {
     Nav
   }
