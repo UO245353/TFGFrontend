@@ -52,7 +52,7 @@ export default {
       evt.preventDefault();
 
       return axios({
-        url: 'http://localhost:23456/api/login/admin',
+        url: this.$store.getters.getBackendURLBase + '/api/login/admin',
         method: 'post',
         data: this.form
       })

@@ -180,7 +180,7 @@ export default {
       if(!!this.nameState && !!this.emailState && (!!this.passState || this.passState === null) && (!!this.confirmState || this.confirmState === null)){
 
         return axios({
-          url: 'http://localhost:23456/api/admin/' + this.editAdminData._id,
+          url: this.$store.getters.getBackendURLBase + '/api/admin/' + this.editAdminData._id,
           method: 'post',
           headers: {
             auth: localStorage.token

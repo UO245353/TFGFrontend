@@ -135,7 +135,7 @@ export default {
   created() {
 
     return axios({
-      url: 'http://localhost:23456/api/theme',
+      url: this.$store.getters.getBackendURLBase + '/api/theme',
       method: 'get',
       headers: {
         auth: localStorage.token
@@ -159,7 +159,7 @@ export default {
       if(!this.isListUpdated){
 
         return axios({
-          url: 'http://localhost:23456/api/theme',
+          url: this.$store.getters.getBackendURLBase + '/api/theme',
           method: 'get',
           headers: {
             auth: localStorage.token

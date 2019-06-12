@@ -117,7 +117,7 @@ export default {
         delete this.editThemeData.questions;
 
         return axios({
-          url: 'http://localhost:23456/api/theme/' + this.editThemeData._id,
+          url: this.$store.getters.getBackendURLBase + '/api/theme/' + this.editThemeData._id,
           method: 'post',
           headers: {
             auth: localStorage.token

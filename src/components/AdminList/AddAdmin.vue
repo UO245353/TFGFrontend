@@ -184,7 +184,7 @@ export default {
       if(!!this.nameState && !!this.emailState && !!this.passState && !!this.confirmState){
 
         return axios({
-          url: 'http://localhost:23456/api/admin',
+          url: this.$store.getters.getBackendURLBase + '/api/admin',
           method: 'post',
           headers: {
             auth: localStorage.token

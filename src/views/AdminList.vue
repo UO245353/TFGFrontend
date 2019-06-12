@@ -80,7 +80,7 @@ export default {
       if(!this.isListUpdated){
 
         return axios({
-          url: 'http://localhost:23456/api/admin',
+          url: this.$store.getters.getBackendURLBase + '/api/admin',
           method: 'get',
           headers: {
             auth: localStorage.token
@@ -153,9 +153,9 @@ export default {
     }
   },
   created() {
-
+    console.log('hola',this.$store);
     return axios({
-      url: 'http://localhost:23456/api/admin',
+      url: this.$store.getters.getBackendURLBase + '/api/admin',
       method: 'get',
       headers: {
         auth: localStorage.token

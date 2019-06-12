@@ -92,7 +92,7 @@ export default {
     onSubmit() {
 
       return axios({
-        url: 'http://localhost:23456/api/theme/' + this.themeData._id,
+        url: this.$store.getters.getBackendURLBase + '/api/theme/' + this.themeData._id,
         method: 'delete',
         headers: {
           auth: localStorage.token

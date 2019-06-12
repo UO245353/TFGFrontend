@@ -8,6 +8,7 @@ import store from './store.js';
 Vue.use(Router);
 
 let router = new Router({
+  transitionOnLoad: true,
   routes: [
     {
       path: '/',
@@ -23,7 +24,17 @@ let router = new Router({
       path: '/theme-list',
       name: 'theme-list',
       component: ThemeList
-    }
+    },
+    {
+      path: '/theme/:themeId/contents',
+      name: 'theme-contents',
+      component: ThemeList
+    },
+    {
+      path: '/theme/:themeId/questions',
+      name: 'theme-questions',
+      component: ThemeList
+    },
   ]
 });
 

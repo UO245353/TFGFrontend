@@ -123,7 +123,7 @@ export default {
       if(!!this.numberState && !!this.titleState){
 
         return axios({
-          url: 'http://localhost:23456/api/theme',
+          url: this.$store.getters.getBackendURLBase + '/api/theme',
           method: 'post',
           headers: {
             auth: localStorage.token
