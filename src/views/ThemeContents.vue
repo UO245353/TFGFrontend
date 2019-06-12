@@ -49,7 +49,6 @@ export default {
       }
     })
     .then(resp => {
-      console.log(resp);
       this.theme = resp.data.obj
 
       this.isListNotLoaded = false;

@@ -7,6 +7,17 @@
     </b-row>
     <br>
     <b-row>
+      <b-col cols="10">
+        <p class="text-left" style="padding-left: 1rem;">Listado de Preguntas</p>
+      </b-col>
+      <b-col cols="2">
+        <p class="fas fa-user-plus show-hand-pointer" v-on:click="" title="Nueva Pregunta"></p>
+      </b-col>
+    </b-row>
+    <b-row v-for="question in theme.questions" role="tablist">
+      <b-col cols="12">
+        <Question :number="question.number" :question="question.question" :responses="question.responses"/>
+      </b-col>
     </b-row>
     <br>
   </div>
@@ -15,6 +26,7 @@
 <script>
 import axios from 'axios';
 import Nav from '@/components/Theme/Nav.vue';
+import Question from '@/components/Theme/Question.vue';
 
 export default {
   name: 'theme-questions',
@@ -37,7 +49,7 @@ export default {
       }
     })
     .then(resp => {
-      console.log(resp);
+
       this.theme = resp.data.obj
 
       this.isListNotLoaded = false;
@@ -78,7 +90,8 @@ export default {
     }
   },
   components: {
-    Nav
+    Nav,
+    Question
   }
 };
 </script>
