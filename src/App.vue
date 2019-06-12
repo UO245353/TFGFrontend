@@ -3,7 +3,10 @@
     <b-row>
       <b-col cols="12" class="navbar-padding">
         <b-navbar toggleable="lg" type="dark" variant="info">
-          <b-navbar-brand to="admin-list">Gestion TI</b-navbar-brand>
+
+          <b-navbar-brand class="fas fa-arrow-circle-left show-hand-pointer" @click="$router.go(-1)" :hidden="hideNavBarMenu"></b-navbar-brand>
+
+          <b-navbar-brand class="show-hand-pointer" @click="$router.push('/admin-list')">Gestion TI</b-navbar-brand>
 
           <b-navbar-toggle ref="ddSalir" target="nav-collapse" :hidden="hideNavBarMenu"></b-navbar-toggle>
 
@@ -14,7 +17,9 @@
             </b-navbar-nav>
           </b-collapse>
 
+          <b-navbar-brand class="fas fa-arrow-circle-right show-hand-pointer" @click="$router.go(1)" :hidden="hideNavBarMenu" right></b-navbar-brand>
         </b-navbar>
+
       </b-col>
     </b-row>
     <b-container>

@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Login from './views/Login.vue';
 import AdminList from './views/AdminList.vue';
 import ThemeList from './views/ThemeList.vue';
+import ThemeContents from './views/ThemeContents.vue';
+import ThemeQuestions from './views/ThemeQuestions.vue';
 import store from './store.js';
 
 Vue.use(Router);
@@ -28,12 +30,12 @@ let router = new Router({
     {
       path: '/theme/:themeId/contents',
       name: 'theme-contents',
-      component: ThemeList
+      component: ThemeContents
     },
     {
       path: '/theme/:themeId/questions',
       name: 'theme-questions',
-      component: ThemeList
+      component: ThemeQuestions
     },
   ]
 });

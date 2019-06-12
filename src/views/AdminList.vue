@@ -153,7 +153,7 @@ export default {
     }
   },
   created() {
-    console.log('hola',this.$store);
+
     return axios({
       url: this.$store.getters.getBackendURLBase + '/api/admin',
       method: 'get',

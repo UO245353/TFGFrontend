@@ -40,7 +40,7 @@
             <i class="fas fa-user-times show-hand-pointer" v-on:click="removeTheme(data.item._id)" title="Borrar Tema"></i>
           </template>
           <template slot="Ver Detalle" slot-scope="data">
-            <i class="fas fa-arrow-alt-circle-right show-hand-pointer" to='theme-list' title="Ver Detalle"></i>
+            <i class="fas fa-arrow-alt-circle-right show-hand-pointer" v-on:click="gotToThemeDetails(data.item._id)" title="Ver Detalle"></i>
           </template>
         </b-table>
       </div>
@@ -82,6 +82,9 @@ export default {
     }
   },
   methods: {
+    gotToThemeDetails(id){
+      this.$router.push('/theme/'+ id +'/contents');
+    },
     editTheme(id) {
       this.editThemeData = this.themeList.find(theme => theme._id === id);
 
