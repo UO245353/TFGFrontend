@@ -7,9 +7,9 @@ var CONFIG = function(isLocal, urls){
 };
 
 export default new CONFIG(
-  true,
+  false,
   {
-    BACKEND_URL_BASE: 'https://gestion-ti.wave-uniovi.es',
+    BACKEND_URL_BASE: 'https://gestion-ti.wave-uniovi.es:23456',
     BACKEND_URL_BASE_LOCAL: 'http://localhost:23456',
   }
 );
