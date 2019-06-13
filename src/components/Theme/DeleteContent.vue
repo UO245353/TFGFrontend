@@ -55,18 +55,11 @@
     <b-row class="my-1">
 
       <b-col sm="3">
-        <label for="responses" class="float-left text-left">Respuestas</label>
+        <label for="responses" class="float-left text-left">Contenido</label>
       </b-col>
 
       <b-col sm="9">
-        <b-label id="responses" class="float-left text-left">
-          <b-row>
-            <b-col cols="12" class="text-left"><u>Contenido</u></b-col>
-          </b-row>
-          <b-row>
-            <b-col cols="12" class="text-left"> {{ sectionData.content }} </b-col>
-          </b-row>
-        </b-label>
+        <b-label id="responses" class="float-left text-left"> {{ sectionData.content }} </b-label>
       </b-col>
 
     </b-row>
@@ -124,7 +117,7 @@ export default {
 
         switch(err.response.status){
           case 404: {
-            this.errorMsg = 'Pregunta no encontrada';
+            this.errorMsg = 'Contenido no encontrado';
             break;
           }
           default: {
