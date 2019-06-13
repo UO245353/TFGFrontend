@@ -4,7 +4,7 @@
   v-model="show"
   size="xl"
   centered
-  title="Eliminar Tema"
+  title="Eliminar Pregunta"
   header-bg-variant="info"
   header-text-variant="light"
   body-bg-variant="light"
@@ -13,10 +13,15 @@
   footer-text-variant="dark">
 
   <b-container fluid>
+
+    <b-alert v-model="showAlert" variant="danger" dismissible>
+      {{ errorMsg }}
+    </b-alert>
+
     <b-row class="my-1">
 
       <b-col sm="12" class="text-left">
-        Confirme que desea eliminar este tema
+        Confirme que desea eliminar esta pregunta
       </b-col>
 
     </b-row>
@@ -26,23 +31,11 @@
     <b-row class="my-1">
 
       <b-col sm="3">
-        <label for="id" class="float-left text-left">Id</label>
-      </b-col>
-
-      <b-col sm="9">
-        <b-label id="id" class="float-left text-left">{{this.themeData._id}}</b-label>
-      </b-col>
-
-    </b-row>
-
-    <b-row class="my-1">
-
-      <b-col sm="3">
         <label for="number" class="float-left text-left">Numero</label>
       </b-col>
 
       <b-col sm="9">
-        <b-label id="number" class="float-left text-left">{{this.themeData.number}}</b-label>
+        <b-label id="number" class="float-left text-left">{{this.questionData.number}}</b-label>
       </b-col>
 
     </b-row>
@@ -50,11 +43,29 @@
     <b-row class="my-1">
 
       <b-col sm="3">
-        <label for="title" class="float-left text-left">Titulo</label>
+        <label for="question" class="float-left text-left">Pregunta</label>
       </b-col>
 
       <b-col sm="9">
-        <b-label id="email" class="float-left text-left">{{this.themeData.title}}</b-label>
+        <b-label id="question" class="float-left text-left">{{this.questionData.question}}</b-label>
+      </b-col>
+
+    </b-row>
+
+    <b-row class="my-1">
+
+      <b-col sm="3">
+        <label for="responses" class="float-left text-left">Respuestas</label>
+      </b-col>
+
+      <b-col sm="9">
+        <b-label id="responses" class="float-left text-left">
+          <b-row v-for="response in questionData.responses">
+            <b-col cols="2"> {{ response.character }} </b-col>
+            <b-col cols="8" class="text-left"> {{ response.response }} </b-col>
+            <b-col cols="2" class="text-left"> {{ (response.valid) ? 'Verdadero' : 'Falso' }} </b-col>
+          </b-row>
+        </b-label>
       </b-col>
 
     </b-row>
@@ -83,25 +94,51 @@
 import axios from 'axios';
 
 export default {
-  name: 'DeleteTheme',
+  name: 'DeleteQuestion',
   props: {
     show: String,
-    themeData: Object
+    themeId: String,
+    questionData: Object
+  },
+  data() {
+
+    return {
+      showAlert: false,
+      errorMsg: ''
+    };
   },
   methods: {
     onSubmit() {
 
       return axios({
-        url: this.$store.getters.getBackendURLBase + '/api/theme/' + this.themeData._id,
+        url: this.$store.getters.getBackendURLBase + '/api/theme/' + this.themeId + '/question',
         method: 'delete',
         headers: {
           auth: localStorage.token
-        }
+        },
+        data: this.questionData
       })
-      .then((resp) => this.$emit('success'));
+      .then(() => this.$emit('success'))
+      .catch(err => {
+
+        switch(err.response.status){
+          case 404: {
+            this.errorMsg = 'Pregunta no encontrada';
+            break;
+          }
+          default: {
+            this.errorMsg = 'Error desconocido';
+          }
+        }
+
+        this.showAlert = true;
+
+        return false;
+      });
     },
     cancel() {
-      this.$emit('close');
+
+      return this.$emit('close');
     }
   }
 };

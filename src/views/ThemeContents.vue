@@ -1,5 +1,10 @@
 <template>
   <div id="theme-contents" class="logged-height">
+
+    <b-alert v-model="showAlert" variant="danger" dismissible>
+      {{ errorMsg }}
+    </b-alert>
+
     <b-row>
       <b-col cols="12">
         <Nav :contents="true" :themeId="themeId"/>
@@ -32,6 +37,8 @@ export default {
   name: 'theme-contents',
   data() {
     return {
+      showAlert: false,
+      errorMsg: '',
       themeId: this.$route.params.themeId,
       theme: {},
       isListNotLoaded: true,
@@ -62,7 +69,19 @@ export default {
     })
     .catch(err => {
 
-      throw err;
+      switch(err.response.status){
+        case 401: {
+          this.errorMsg = 'Operacion no autorizada, token invalido';
+          break;
+        }
+        default: {
+          this.errorMsg = 'Error desconocido';
+        }
+      }
+
+      this.showAlert = true;
+
+      return false;
     });
   },
   watch: {
@@ -87,9 +106,23 @@ export default {
         })
         .catch(err => {
 
-          throw err;
+          switch(err.response.status){
+            case 401: {
+              this.errorMsg = 'Operacion no autorizada, token invalido';
+              break;
+            }
+            default: {
+              this.errorMsg = 'Error desconocido';
+            }
+          }
+
+          this.showAlert = true;
+
+          return false;
         });
       }
+
+      return false;
     }
   },
   components: {

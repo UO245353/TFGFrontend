@@ -4,6 +4,11 @@
     <AddTheme :show="showAddTheme" v-on:success="addThemeSuccess" v-on:close="closeModels"/>
     <EditTheme :editThemeData="editThemeData" :show="showEditTheme" v-on:success="editThemeSuccess" v-on:close="closeModels"/>
     <RemoveTheme :themeData="deleteThemeData" :show="showRemoveTheme" v-on:success="removeThemeSuccess" v-on:close="closeModels"/>
+
+    <b-alert v-model="showAlert" variant="danger" dismissible>
+      {{ errorMsg }}
+    </b-alert>
+
     <br>
     <b-row>
       <b-col cols="12">
@@ -61,6 +66,8 @@ export default {
   name: 'theme-list',
   data() {
     return {
+      showAlert: false,
+      errorMsg: '',
       themeList: [],
       isListNotLoaded: true,
       isListUpdated: true,
@@ -83,7 +90,8 @@ export default {
   },
   methods: {
     gotToThemeDetails(id){
-      this.$router.push('/theme/'+ id +'/contents');
+
+      return this.$router.push('/theme/'+ id +'/contents');
     },
     editTheme(id) {
       this.editThemeData = this.themeList.find(theme => theme._id === id);
@@ -107,21 +115,18 @@ export default {
     editThemeSuccess(){
       this.isListUpdated = false;
 
-      this.closeModels();
-      return true;
+      return this.closeModels();
     },
     addThemeSuccess(){
       this.isListUpdated = false;
 
-      this.closeModels();
-      return true;
+      return this.closeModels();
     },
     removeThemeSuccess(){
 
       this.isListUpdated = false;
 
-      this.closeModels();
-      return true;
+      return this.closeModels();
     },
     closeModels() {
 
@@ -154,7 +159,19 @@ export default {
     })
     .catch(err => {
 
-      throw err;
+      switch(err.response.status){
+        case 401: {
+          this.errorMsg = 'Operacion no autorizada, token invalido';
+          break;
+        }
+        default: {
+          this.errorMsg = 'Error desconocido';
+        }
+      }
+
+      this.showAlert = true;
+
+      return false;
     });
   },
   watch: {
@@ -179,9 +196,23 @@ export default {
         })
         .catch(err => {
 
-          throw err;
+          switch(err.response.status){
+            case 401: {
+              this.errorMsg = 'Operacion no autorizada, token invalido';
+              break;
+            }
+            default: {
+              this.errorMsg = 'Error desconocido';
+            }
+          }
+
+          this.showAlert = true;
+
+          return false;
         });
       }
+
+      return false;
     }
   },
   components: {

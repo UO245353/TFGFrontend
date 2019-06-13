@@ -4,7 +4,7 @@
   v-model="show"
   size="xl"
   centered
-  title="Respuesta Pregunta"
+  title="Crear Respuesta De Pregunta"
   header-bg-variant="info"
   header-text-variant="light"
   body-bg-variant="light"
@@ -48,7 +48,7 @@
           id="response"
           type="text"
           :state="responseState"
-          placeholder="Pregunta"
+          placeholder="Respuesta"
           v-model="form.response"
           aria-describedby="input-live-feedback"
           required></b-form-input>

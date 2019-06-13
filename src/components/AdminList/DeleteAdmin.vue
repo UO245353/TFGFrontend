@@ -13,6 +13,11 @@
   footer-text-variant="dark">
 
   <b-container fluid>
+
+    <b-alert v-model="showAlert" variant="danger" dismissible>
+      {{ errorMsg }}
+    </b-alert>
+
     <b-row class="my-1">
 
       <b-col sm="12" class="text-left">
@@ -88,6 +93,13 @@ export default {
     show: String,
     adminData: Object
   },
+  data(){
+
+    return {
+      showAlert: false,
+      errorMsg: '',
+    };
+  },
   methods: {
     onSubmit() {
 
@@ -98,10 +110,26 @@ export default {
           auth: localStorage.token
         }
       })
-      .then((resp) => this.$emit('success'));
+      .then(() => this.$emit('success'))
+      .catch(err => {
+
+        switch(err.response.status){
+          case 404: {
+            this.errorMsg = 'No encontrado';
+            break;
+          }
+          default: {
+            this.errorMsg = 'Error desconocido';
+          }
+        }
+
+        this.showAlert = true;
+
+        return false;
+      });
     },
     cancel() {
-      this.$emit('close');
+      return this.$emit('close');
     }
   }
 };

@@ -1,10 +1,15 @@
 <template>
 
   <b-card no-body class="mb-1">
+
+    <b-alert v-model="showAlert" variant="danger" dismissible>
+      {{ errorMsg }}
+    </b-alert>
+
     <b-card-header header-tag="header" class="p-1" role="tab">
       <b-row>
         <b-col block cols="2" class="d-flex align-items-center justify-content-center">
-            {{ number }}
+          {{ number }}
         </b-col>
         <b-col cols="8">
           <b-button ref="acc-toggler" href="#" block v-b-toggle.accordion-1 variant="light">
@@ -45,15 +50,26 @@ export default {
     question: String,
     responses: Object
   },
+  data(){
+
+    return {
+      showAlert: false,
+      errorMsg: '',
+    };
+  },
   methods: {
     removeQuestion(){
-      return this.$emit('removeQuestion', this.number);
+
+      return this.$emit('removeQuestion', {number: this.number, question: this.question, responses: this.responses});
     }
   },
   mounted(){
+
     this.$refs.acc.id = 'accordion-' + this.number;
     this.$refs['acc-toggler'].__BV_toggle_CONTROLS__ = 'accordion-' + this.number;
     this.$refs['acc-toggler'].__BV_toggle_TARGETS__[0] = 'accordion-' + this.number;
+
+    return true;
   }
 };
 </script>

@@ -20,12 +20,14 @@ export default {
     contentsActive(){
       this.contents = true;
       this.questions = false;
-      this.$router.push('/theme/'+ this.themeId +'/contents');
+
+      return this.$router.push('/theme/'+ this.themeId +'/contents');
     },
     questionsActive(){
       this.contents = false;
       this.questions = true;
-      this.$router.push('/theme/'+ this.themeId +'/questions');
+      
+      return this.$router.push('/theme/'+ this.themeId +'/questions');
     }
   }
 };

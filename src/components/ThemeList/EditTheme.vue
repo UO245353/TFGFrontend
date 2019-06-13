@@ -15,6 +15,10 @@
   <b-form>
     <b-container fluid>
 
+      <b-alert v-model="showAlert" variant="danger" dismissible>
+        {{ errorMsg }}
+      </b-alert>
+
       <b-form-row class="my-1">
 
         <b-col sm="3">
@@ -88,6 +92,13 @@ export default {
     show: String,
     editThemeData: Object
   },
+  data() {
+
+    return {
+      showAlert: false,
+      errorMsg: ''
+    };
+  },
   computed: {
     numberState() {
 
@@ -124,11 +135,30 @@ export default {
           },
           data: this.editThemeData
         })
-        .then((resp) => this.$emit('success'));
+        .then(() => this.$emit('success'))
+        .catch(err => {
+
+          switch(err.response.status){
+            case 409: {
+              this.errorMsg = 'Titulo o numero duplicado';
+              break;
+            }
+            default: {
+              this.errorMsg = 'Error desconocido';
+            }
+          }
+
+          this.showAlert = true;
+
+          return false;
+        });
       }
+
+      return false;
     },
     cancel() {
-      this.$emit('close');
+
+      return this.$emit('close');
     }
   }
 };

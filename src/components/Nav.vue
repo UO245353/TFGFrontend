@@ -19,10 +19,14 @@ export default {
     adminActive(){
       this.admin = true;
       this.temas = false;
+
+      return true;
     },
     temaActive(){
       this.admin = false;
       this.temas = true;
+
+      return true;
     }
   }
 };

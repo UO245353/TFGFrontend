@@ -15,6 +15,10 @@
   <b-form>
     <b-container fluid>
 
+      <b-alert v-model="showAlert" variant="danger" dismissible>
+        {{ errorMsg }}
+      </b-alert>
+
       <b-form-row class="my-1">
 
         <b-col sm="3">
@@ -87,6 +91,19 @@ export default {
   props: {
     show: String,
   },
+  data() {
+
+    return {
+      showAlert: false,
+      errorMsg: '',
+      form: {
+        number: undefined,
+        title: undefined,
+        questions: [],
+        sections: []
+      }
+    };
+  },
   computed: {
     numberState() {
 
@@ -107,16 +124,6 @@ export default {
       return /^(?=\w.*).{1,}$/.test(this.form.title);
     },
   },
-  data() {
-    return {
-      form: {
-        number: undefined,
-        title: undefined,
-        questions: [],
-        sections: []
-      }
-    };
-  },
   methods: {
     onSubmit() {
 
@@ -130,12 +137,31 @@ export default {
           },
           data: this.form
         })
-        .then((resp) => this.$emit('success'));
+        .then(() => this.$emit('success'))
+        .catch(err => {
+
+          switch(err.response.status){
+            case 409: {
+              this.errorMsg = 'Numero o titulo duplicado';
+              break;
+            }
+            default: {
+              this.errorMsg = 'Error desconocido';
+            }
+          }
+
+          this.showAlert = true;
+
+          return false;
+        });
       }
+
+      return false;
     },
     cancel() {
       this.form = {};
-      this.$emit('close');
+
+      return this.$emit('close');
     }
   }
 };

@@ -23,6 +23,10 @@
 
     <br>
 
+    <b-alert v-model="showAlert" variant="danger" dismissible>
+      {{ errorMsg }}
+    </b-alert>
+
     <b-row class="my-1">
 
       <b-col sm="3">
@@ -88,6 +92,13 @@ export default {
     show: String,
     themeData: Object
   },
+  data(){
+
+    return {
+      showAlert: false,
+      errorMsg: '',
+    };
+  },
   methods: {
     onSubmit() {
 
@@ -98,10 +109,27 @@ export default {
           auth: localStorage.token
         }
       })
-      .then((resp) => this.$emit('success'));
+      .then((resp) => this.$emit('success'))
+      .catch(err => {
+
+        switch(err.response.status){
+          case 404: {
+            this.errorMsg = 'Tema no encontrado';
+            break;
+          }
+          default: {
+            this.errorMsg = 'Error desconocido';
+          }
+        }
+
+        this.showAlert = true;
+
+        return false;
+      });
     },
     cancel() {
-      this.$emit('close');
+
+      return this.$emit('close');
     }
   }
 };

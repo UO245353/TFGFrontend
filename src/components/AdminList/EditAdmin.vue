@@ -15,6 +15,10 @@
   <b-form>
     <b-container fluid>
 
+      <b-alert v-model="showAlert" variant="danger" dismissible>
+        {{ errorMsg }}
+      </b-alert>
+
       <b-form-row class="my-1">
 
         <b-col sm="3">
@@ -131,6 +135,14 @@ export default {
     show: String,
     editAdminData: Object
   },
+  data() {
+
+    return {
+      showAlert: false,
+      errorMsg: '',
+      confPass: undefined
+    };
+  },
   computed: {
     nameState() {
 
@@ -169,11 +181,6 @@ export default {
       return this.confPass === this.editAdminData.pass;
     },
   },
-  data() {
-    return {
-      confPass: undefined
-    };
-  },
   methods: {
     onSubmit() {
 
@@ -187,15 +194,32 @@ export default {
           },
           data: this.editAdminData
         })
-        .then((resp) => this.$emit('success'))
+        .then(() => this.$emit('success'))
         .catch(err => {
-          console.log(err);
+
+          switch(err.response.status){
+            case 409: {
+              this.errorMsg = 'Nombre duplicado';
+              break;
+            }
+            default: {
+              this.errorMsg = 'Error desconocido';
+            }
+          }
+
+          this.showAlert = true;
+
+          return false;
         });
       }
+
+      return false;
     },
     cancel() {
+
       this.confPass = undefined;
-      this.$emit('close');
+
+      return this.$emit('close');
     }
   }
 };
