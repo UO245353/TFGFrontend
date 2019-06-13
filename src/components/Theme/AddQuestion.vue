@@ -85,6 +85,10 @@
           :fields="fields"
           aria-describedby="input-live-feedback"
           required>
+          <template slot="Validez" slot-scope="data">
+            <i v-if="data.item.valid" class="far fa-check-circle"/>
+            <i v-else class="far fa-times-circle"/>
+          </template>
           <template slot="Borrar" slot-scope="data">
             <i class="fas fa-user-times show-hand-pointer" v-on:click="removeResponse(data.item.character)" title="Borrar Administrador"></i>
           </template>
@@ -141,7 +145,7 @@ export default {
       fields: [
         { key: 'character', label: 'Letra' },
         { key: 'response', label: 'Respuesta' },
-        { key: 'valid', label: 'Valida' },
+        'Validez',
         'Borrar'
       ]
     };
@@ -278,7 +282,7 @@ export default {
         question: undefined,
         responses: [],
       };
-      
+
       return this.$emit('close');
     }
   },

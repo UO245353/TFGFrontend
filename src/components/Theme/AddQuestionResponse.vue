@@ -62,7 +62,7 @@
       <b-form-row class="my-1">
 
         <b-col sm="3">
-          <label for="valid">Valida</label>
+          <label for="valid">Validez</label>
         </b-col>
 
         <b-col sm="9">
