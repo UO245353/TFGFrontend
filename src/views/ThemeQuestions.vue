@@ -1,5 +1,8 @@
 <template>
   <div id="theme-questions" class="logged-height">
+
+    <AddQuestion :show="showAddQuestion" v-on:success="addQuestionSuccess" v-on:close="closeModels"/>
+
     <b-row>
       <b-col cols="12">
         <Nav :questions="true" :themeId="themeId"/>
@@ -11,12 +14,12 @@
         <p class="text-left" style="padding-left: 1rem;">Listado de Preguntas</p>
       </b-col>
       <b-col cols="2">
-        <p class="fas fa-user-plus show-hand-pointer" v-on:click="" title="Nueva Pregunta"></p>
+        <p class="fas fa-user-plus show-hand-pointer" v-on:click="addQuestion" title="Nueva Pregunta"></p>
       </b-col>
     </b-row>
     <b-row v-for="question in theme.questions" role="tablist">
       <b-col cols="12">
-        <Question :number="question.number" :question="question.question" :responses="question.responses"/>
+        <Question :number="question.number" :question="question.question" :responses="question.responses" v-on:removeQuestion="removeQuestion"/>
       </b-col>
     </b-row>
     <br>
@@ -27,6 +30,7 @@
 import axios from 'axios';
 import Nav from '@/components/Theme/Nav.vue';
 import Question from '@/components/Theme/Question.vue';
+import AddQuestion from '@/components/Theme/AddQuestion.vue';
 
 export default {
   name: 'theme-questions',
@@ -36,9 +40,23 @@ export default {
       theme: {},
       isListNotLoaded: true,
       isListUpdated: true,
+      showAddQuestion: false
     }
   },
-  methods: {},
+  methods: {
+    removeQuestion(number){
+
+    },
+    addQuestion(){
+      this.showAddQuestion = true;
+    },
+    addQuestionSuccess(){
+
+    },
+    closeModels(){
+      this.showAddQuestion = false;
+    }
+  },
   created() {
 
     return axios({
@@ -91,7 +109,8 @@ export default {
   },
   components: {
     Nav,
-    Question
+    Question,
+    AddQuestion
   }
 };
 </script>

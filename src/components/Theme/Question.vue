@@ -3,7 +3,7 @@
   <b-card no-body class="mb-1">
     <b-card-header header-tag="header" class="p-1" role="tab">
       <b-row>
-        <b-col block cols="2">
+        <b-col block cols="2" class="d-flex align-items-center justify-content-center">
             {{ number }}
         </b-col>
         <b-col cols="8">
@@ -11,8 +11,8 @@
             <b><span class="">{{ question }}</span></b>
           </b-button>
         </b-col>
-        <b-col cols="2">
-
+        <b-col cols="2" class="d-flex align-items-center justify-content-center">
+          <i class="fas fa-user-times show-hand-pointer" v-on:click="removeQuestion()" title="Borrar Tema"></i>
         </b-col>
       </b-row>
     </b-card-header>
@@ -24,7 +24,7 @@
           <b-row v-for="response in responses">
             <b-col cols="2"> {{ response.character }} </b-col>
             <b-col cols="8" class="text-left"> {{ response.response }} </b-col>
-            <b-col cols="2"> {{ (response.valid) ? 'Verdadero' : 'Falso' }} </b-col>
+            <b-col cols="2" class="text-left"> {{ (response.valid) ? 'Verdadero' : 'Falso' }} </b-col>
           </b-row>
         </b-card-text>
 
@@ -45,7 +45,11 @@ export default {
     question: String,
     responses: Object
   },
-  methods: {},
+  methods: {
+    removeQuestion(){
+      return this.$emit('removeQuestion', this.number);
+    }
+  },
   mounted(){
     this.$refs.acc.id = 'accordion-' + this.number;
     this.$refs['acc-toggler'].__BV_toggle_CONTROLS__ = 'accordion-' + this.number;

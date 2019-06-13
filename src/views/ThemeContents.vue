@@ -11,12 +11,12 @@
         <p class="text-left" style="padding-left: 1rem;">Listado de Contenidos</p>
       </b-col>
       <b-col cols="2">
-        <p class="fas fa-user-plus show-hand-pointer" v-on:click="" title="Nuevo Contenido"></p>
+        <p class="fas fa-user-plus show-hand-pointer" title="Nuevo Contenido"></p>
       </b-col>
     </b-row>
     <b-row v-for="section in theme.sections" role="tablist">
       <b-col cols="12">
-        <Content :number="section.number" :title="section.title" :content="section.content"/>
+        <Content :number="section.number" :title="section.title" :content="section.content" v-on:removeContent="removeContent"/>
       </b-col>
     </b-row>
     <br>
@@ -38,7 +38,11 @@ export default {
       isListUpdated: true,
     }
   },
-  methods: {},
+  methods: {
+    removeContent(number){
+      console.log(number);
+    }
+  },
   created() {
 
     return axios({
