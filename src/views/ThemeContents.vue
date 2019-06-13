@@ -1,6 +1,8 @@
 <template>
   <div id="theme-contents" class="logged-height">
 
+    <DeleteContent :themeId="themeId" :sectionData="deleteSectionData" :show="showRemoveContent" v-on:success="removeContentSuccess" v-on:close="closeModels"/>
+
     <b-alert v-model="showAlert" variant="danger" dismissible>
       {{ errorMsg }}
     </b-alert>
@@ -32,6 +34,7 @@
 import axios from 'axios';
 import Nav from '@/components/Theme/Nav.vue';
 import Content from '@/components/Theme/Content.vue';
+import DeleteContent from '@/components/Theme/DeleteContent.vue';
 
 export default {
   name: 'theme-contents',
@@ -41,13 +44,30 @@ export default {
       errorMsg: '',
       themeId: this.$route.params.themeId,
       theme: {},
-      isListNotLoaded: true,
-      isListUpdated: true,
+      showRemoveContent: false,
+      deleteSectionData: {}
     }
   },
   methods: {
-    removeContent(number){
-      console.log(number);
+    removeContent(sectionData){
+      console.log('hola',sectionData);
+      this.deleteSectionData = sectionData;
+      this.showRemoveContent = true;
+
+      return true;
+    },
+    removeContentSuccess(){
+      this.deleteSectionData = {};
+
+      this.closeModels();
+
+      return location.reload();
+    },
+    closeModels(){
+
+      this.showRemoveContent = false;
+
+      return true;
     }
   },
   created() {
@@ -61,9 +81,6 @@ export default {
     })
     .then(resp => {
       this.theme = resp.data.obj
-
-      this.isListNotLoaded = false;
-      this.isListUpdated = true;
 
       return true;
     })
@@ -84,50 +101,10 @@ export default {
       return false;
     });
   },
-  watch: {
-    isListUpdated(){
-      if(!this.isListUpdated){
-
-        return axios({
-          url: this.$store.getters.getBackendURLBase + '/api/theme/' + this.themeId,
-          method: 'get',
-          headers: {
-            auth: localStorage.token
-          }
-        })
-        .then(resp => {
-
-          this.theme = resp.data.obj
-
-          this.isListNotLoaded = false;
-          this.isListUpdated = true;
-
-          return true;
-        })
-        .catch(err => {
-
-          switch(err.response.status){
-            case 401: {
-              this.errorMsg = 'Operacion no autorizada, token invalido';
-              break;
-            }
-            default: {
-              this.errorMsg = 'Error desconocido';
-            }
-          }
-
-          this.showAlert = true;
-
-          return false;
-        });
-      }
-
-      return false;
-    }
-  },
   components: {
     Nav,
-    Content
+    Content,
+    DeleteContent
   }
 };
 </script>

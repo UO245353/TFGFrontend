@@ -2,7 +2,6 @@
 
   <b-card no-body class="mb-1">
 
-
     <b-alert v-model="showAlert" variant="danger" dismissible>
       {{ errorMsg }}
     </b-alert>
@@ -30,7 +29,14 @@
 
           </b-col>
           <b-col cols="8">
-            <b-card-text class="text-left">{{ content }}</b-card-text>
+            <b-card-text class="text-left">
+              <b-row>
+                <b-col cols="12" class="text-left"><u>Contenido</u></b-col>
+              </b-row>
+              <b-row>
+                <b-col cols="12" class="text-left"> {{ content }} </b-col>
+              </b-row>
+            </b-card-text>
           </b-col>
           <b-col cols="2">
 
@@ -62,7 +68,7 @@ export default {
   methods: {
     removeContent(){
 
-      return this.$emit('removeContent', this.number);
+      return this.$emit('removeContent', {number: this.number, title: this.title, content: this.content});
     }
   },
   mounted(){
