@@ -2,6 +2,7 @@
   <div id="theme-contents" class="logged-height">
 
     <DeleteContent :themeId="themeId" :sectionData="deleteSectionData" :show="showRemoveContent" v-on:success="removeContentSuccess" v-on:close="closeModels"/>
+    <AddContent :themeId="themeId" :show="showAddContent" v-on:success="addContentSuccess" v-on:close="closeModels"/>
 
     <b-alert v-model="showAlert" variant="danger" dismissible>
       {{ errorMsg }}
@@ -18,7 +19,7 @@
         <p class="text-left" style="padding-left: 1rem;">Listado de Contenidos</p>
       </b-col>
       <b-col cols="2">
-        <p class="fas fa-user-plus show-hand-pointer" title="Nuevo Contenido"></p>
+        <p class="fas fa-user-plus show-hand-pointer" v-on:click="addContent" title="Nuevo Contenido"></p>
       </b-col>
     </b-row>
     <b-row v-for="section in theme.sections" role="tablist">
@@ -34,6 +35,7 @@
 import axios from 'axios';
 import Nav from '@/components/Theme/Nav.vue';
 import Content from '@/components/Theme/Content.vue';
+import AddContent from '@/components/Theme/AddContent.vue';
 import DeleteContent from '@/components/Theme/DeleteContent.vue';
 
 export default {
@@ -45,12 +47,13 @@ export default {
       themeId: this.$route.params.themeId,
       theme: {},
       showRemoveContent: false,
+      showAddContent: false,
       deleteSectionData: {}
     }
   },
   methods: {
     removeContent(sectionData){
-      console.log('hola',sectionData);
+
       this.deleteSectionData = sectionData;
       this.showRemoveContent = true;
 
@@ -63,9 +66,22 @@ export default {
 
       return location.reload();
     },
+    addContent(){
+
+      this.showAddContent = true;
+
+      return true;
+    },
+    addContentSuccess(){
+
+      this.closeModels();
+
+      return location.reload();
+    },
     closeModels(){
 
       this.showRemoveContent = false;
+      this.showAddContent = false;
 
       return true;
     }
@@ -104,7 +120,8 @@ export default {
   components: {
     Nav,
     Content,
-    DeleteContent
+    DeleteContent,
+    AddContent
   }
 };
 </script>

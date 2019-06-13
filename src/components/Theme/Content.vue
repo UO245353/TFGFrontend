@@ -34,7 +34,9 @@
                 <b-col cols="12" class="text-left"><u>Contenido</u></b-col>
               </b-row>
               <b-row>
-                <b-col cols="12" class="text-left"> {{ content }} </b-col>
+                <b-col cols="12" class="text-left" v-for="line in content.split('\n')">
+                  {{ line }}
+                </b-col>
               </b-row>
             </b-card-text>
           </b-col>
