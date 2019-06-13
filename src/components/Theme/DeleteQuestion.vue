@@ -60,10 +60,18 @@
 
       <b-col sm="9">
         <b-label id="responses" class="float-left text-left">
+          <b-row>
+            <b-col cols="2" class="text-left"><u>Letra</u></b-col>
+            <b-col cols="8" class="text-left"><u>Respuesta</u></b-col>
+            <b-col cols="2" class="text-left"><u>Validez</u></b-col>
+          </b-row>
           <b-row v-for="response in questionData.responses">
-            <b-col cols="2"> {{ response.character }} </b-col>
+            <b-col cols="2" class="text-left"> {{ response.character }} </b-col>
             <b-col cols="8" class="text-left"> {{ response.response }} </b-col>
-            <b-col cols="2" class="text-left"> {{ (response.valid) ? 'Verdadero' : 'Falso' }} </b-col>
+            <b-col cols="2" class="text-left">
+              <i v-if="response.valid" class="far fa-check-circle"/>
+              <i v-else class="far fa-times-circle"/>
+            </b-col>
           </b-row>
         </b-label>
       </b-col>
