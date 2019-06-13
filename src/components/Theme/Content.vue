@@ -13,12 +13,12 @@
           {{ number }}
         </b-col>
         <b-col cols="8">
-          <b-button ref="acc-toggler" href="#" block v-b-toggle.accordion-1 variant="light">
+          <b-button title="Desplegar|Contraer" ref="acc-toggler" href="#" block v-b-toggle.accordion-1 variant="light">
             <b>{{ title }}</b>
           </b-button>
         </b-col>
         <b-col cols="2" class="d-flex align-items-center justify-content-center">
-          <i class="fas fa-user-times show-hand-pointer" v-on:click="removeContent()" title="Borrar Tema"></i>
+          <i class="fas fa-user-times show-hand-pointer" v-on:click="removeContent()" title="Borrar Contenido"></i>
         </b-col>
       </b-row>
     </b-card-header>

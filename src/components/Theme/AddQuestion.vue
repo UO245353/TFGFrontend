@@ -90,7 +90,7 @@
             <i v-else class="far fa-times-circle"/>
           </template>
           <template slot="Borrar" slot-scope="data">
-            <i class="fas fa-user-times show-hand-pointer" v-on:click="removeResponse(data.item.character)" title="Borrar Administrador"></i>
+            <i class="fas fa-user-times show-hand-pointer" v-on:click="removeResponse(data.item.character)" title="Borrar Pregunta"></i>
           </template>
         </b-table>
       </b-col>
