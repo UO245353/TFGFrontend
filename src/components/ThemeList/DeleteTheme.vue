@@ -4,7 +4,7 @@
   v-model="show"
   size="xl"
   centered
-  title="Eliminar Administrador"
+  title="Eliminar Tema"
   header-bg-variant="info"
   header-text-variant="light"
   body-bg-variant="light"
@@ -16,12 +16,16 @@
     <b-row class="my-1">
 
       <b-col sm="12" class="text-left">
-        Confirme que desea eliminar a este administrador
+        Confirme que desea eliminar este tema
       </b-col>
 
     </b-row>
 
     <br>
+
+    <b-alert v-model="showAlert" variant="danger" dismissible>
+      {{ errorMsg }}
+    </b-alert>
 
     <b-row class="my-1">
 
@@ -30,7 +34,7 @@
       </b-col>
 
       <b-col sm="9">
-        <b-label id="id" class="float-left text-left">{{this.adminData._id}}</b-label>
+        <b-label id="id" class="float-left text-left">{{this.themeData._id}}</b-label>
       </b-col>
 
     </b-row>
@@ -38,11 +42,11 @@
     <b-row class="my-1">
 
       <b-col sm="3">
-        <label for="name" class="float-left text-left">Nombre</label>
+        <label for="number" class="float-left text-left">Numero</label>
       </b-col>
 
       <b-col sm="9">
-        <b-label id="name" class="float-left text-left">{{this.adminData.name}}</b-label>
+        <b-label id="number" class="float-left text-left">{{this.themeData.number}}</b-label>
       </b-col>
 
     </b-row>
@@ -50,11 +54,11 @@
     <b-row class="my-1">
 
       <b-col sm="3">
-        <label for="email" class="float-left text-left">Correo Electronico</label>
+        <label for="title" class="float-left text-left">Titulo</label>
       </b-col>
 
       <b-col sm="9">
-        <b-label id="email" class="float-left text-left">{{this.adminData.email}}</b-label>
+        <b-label id="email" class="float-left text-left">{{this.themeData.title}}</b-label>
       </b-col>
 
     </b-row>
@@ -83,25 +87,49 @@
 import axios from 'axios';
 
 export default {
-  name: 'DeleteAdmin',
+  name: 'DeleteTheme',
   props: {
     show: String,
-    adminData: Object
+    themeData: Object
+  },
+  data(){
+
+    return {
+      showAlert: false,
+      errorMsg: '',
+    };
   },
   methods: {
     onSubmit() {
 
       return axios({
-        url: 'http://localhost:23456/api/admin/' + this.adminData._id,
+        url: this.$store.getters.getBackendURLBase + '/api/theme/' + this.themeData._id,
         method: 'delete',
         headers: {
           auth: localStorage.token
         }
       })
-      .then((resp) => this.$emit('success'));
+      .then((resp) => this.$emit('success'))
+      .catch(err => {
+
+        switch(err.response.status){
+          case 404: {
+            this.errorMsg = 'Tema no encontrado';
+            break;
+          }
+          default: {
+            this.errorMsg = 'Error desconocido';
+          }
+        }
+
+        this.showAlert = true;
+
+        return false;
+      });
     },
     cancel() {
-      this.$emit('close');
+
+      return this.$emit('close');
     }
   }
 };

@@ -38,6 +38,7 @@ import axios from 'axios';
 export default {
   name: 'login',
   data() {
+    
     return {
       form: {
         name: '',
@@ -52,7 +53,7 @@ export default {
       evt.preventDefault();
 
       return axios({
-        url: 'http://localhost:23456/api/login/admin',
+        url: this.$store.getters.getBackendURLBase + '/api/login/admin',
         method: 'post',
         data: this.form
       })

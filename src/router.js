@@ -3,11 +3,14 @@ import Router from 'vue-router';
 import Login from './views/Login.vue';
 import AdminList from './views/AdminList.vue';
 import ThemeList from './views/ThemeList.vue';
+import ThemeContents from './views/ThemeContents.vue';
+import ThemeQuestions from './views/ThemeQuestions.vue';
 import store from './store.js';
 
 Vue.use(Router);
 
 let router = new Router({
+  transitionOnLoad: true,
   routes: [
     {
       path: '/',
@@ -23,7 +26,17 @@ let router = new Router({
       path: '/theme-list',
       name: 'theme-list',
       component: ThemeList
-    }
+    },
+    {
+      path: '/theme/:themeId/contents',
+      name: 'theme-contents',
+      component: ThemeContents
+    },
+    {
+      path: '/theme/:themeId/questions',
+      name: 'theme-questions',
+      component: ThemeQuestions
+    },
   ]
 });
 
